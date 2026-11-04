@@ -7,7 +7,7 @@
 
    Table of contents
      1. Helpers
-     2. Render: activities, projects, certificates
+     2. Render: education, activities, projects, certificates
      3. Modal (activity details + gallery)
      4. Lightbox (zoomed photos / certificates)
      5. Project case study (full-screen story view)
@@ -49,6 +49,39 @@ function onActivate(root, selector, handler) {
 
 
 /* ── 2. RENDER ──────────────────────────────────────────────────────── */
+
+/* 2-0. Education — one card built from the EDUCATION object (data.js) */
+function renderEducation() {
+  const e = EDUCATION;
+  $('#eduWrap').innerHTML = `
+    <article class="edu-card">
+      <aside class="edu-side">
+        <div class="act-icon-ring edu-icon">${e.icon}</div>
+        <h3 class="edu-school">${e.school}</h3>
+        <div class="edu-degree">${e.degree}</div>
+        <div class="edu-meta">
+          ${e.period ? `<span class="exp-date">${e.period}</span>` : ''}
+          ${e.gpa ? `<span class="exp-date">GPA ${e.gpa}</span>` : ''}
+        </div>
+        ${e.location ? `<div class="act-org">${e.location}</div>` : ''}
+      </aside>
+      <div class="edu-main">
+        <p class="modal-lead">${e.summary}</p>
+        ${(e.details || []).map(t => `<p class="modal-text">${t}</p>`).join('')}
+        ${e.courses?.length ? `<h3 class="modal-sub">Key courses</h3>
+          <div class="edu-courses">${e.courses.map(c => `
+            <div class="edu-course"><div class="edu-course-name">${c.name}</div><p>${c.note}</p></div>`).join('')}
+          </div>` : ''}
+        ${e.thesis ? `<div class="edu-thesis">
+          <span class="edu-thesis-label">${e.thesis.label}</span>
+          <div class="edu-thesis-title">${e.thesis.title}</div>
+          <p>${e.thesis.text}</p>
+          ${e.thesis.tags?.length ? `<div class="modal-tags">${e.thesis.tags.map(t => `<span class="exp-tag">${t}</span>`).join('')}</div>` : ''}
+        </div>` : ''}
+        ${e.tags?.length ? `<div class="modal-tags">${e.tags.map(t => `<span class="exp-tag">${t}</span>`).join('')}</div>` : ''}
+      </div>
+    </article>`;
+}
 
 /* 2a. Activities — one card per ACTIVITIES item (data.js) */
 function renderActivities() {
@@ -305,10 +338,14 @@ function openDetail(idx) {
   pvOverlay.classList.add('open');
   syncScrollLock();
 
-  // scroll listener for dots + counter
-  const slideH = () => pvTrack.clientHeight;
+  // scroll listener for dots + counter.
+  // Slides can be taller than the screen on phones, so find the current one
+  // by position instead of dividing by the screen height.
+  const slideTop = el => el.offsetTop - pvTrack.offsetTop;
   pvTrack.onscroll = () => {
-    const i = Math.round(pvTrack.scrollTop / slideH());
+    const mid = pvTrack.scrollTop + pvTrack.clientHeight / 2;
+    let i = 0;
+    pvTrack.querySelectorAll('.pv-slide').forEach((el, n) => { if (slideTop(el) <= mid) i = n; });
     pvCounter.textContent = `${i+1} / ${totalChapters}`;
     pvProgress.querySelectorAll('.pv-pdot').forEach((d,idx)=>
       d.classList.toggle('active', idx===i)
@@ -317,7 +354,8 @@ function openDetail(idx) {
 }
 
 function pvGoSlide(i) {
-  pvTrack.scrollTo({ top: i * pvTrack.clientHeight, behavior: 'smooth' });
+  const el = pvTrack.querySelectorAll('.pv-slide')[i];
+  pvTrack.scrollTo({ top: el.offsetTop - pvTrack.offsetTop, behavior: 'smooth' });
 }
 
 function closePV() {
@@ -350,7 +388,7 @@ document.addEventListener('keydown', e => {
 // Elements fade in once as they enter the viewport. The .rv class is removed
 // afterwards so card hover effects keep working. Add a selector to animate more.
 function initReveal() {
-  const sel = '.exp-card, .act-card, .proj-card, .cert-card, .c-link, .stat-pill';
+  const sel = '.edu-card, .exp-card, .act-card, .proj-card, .cert-card, .c-link';
   document.querySelectorAll(sel).forEach(el => {
     el.classList.add('rv');
     const io = new IntersectionObserver(([en]) => {
@@ -364,6 +402,7 @@ function initReveal() {
 }
 
 /* ── START ──────────────────────────────────────────────────────────── */
+renderEducation();
 renderActivities();
 renderProjects();
 renderCertificates();

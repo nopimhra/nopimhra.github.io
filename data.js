@@ -1,7 +1,8 @@
 /* =====================================================================
-   data.js — ALL EDITABLE CONTENT FOR THREE SECTIONS LIVES HERE
+   data.js — ALL EDITABLE CONTENT FOR FOUR SECTIONS LIVES HERE
    ---------------------------------------------------------------------
    Sections driven by this file:
+     0. EDUCATION     → "What I studied" card (one object, not a list)
      1. ACTIVITIES    → "Beyond the classroom" cards + their pop-up modal
      2. PROJECTS      → project cards + full-screen case study
      3. CERTIFICATES  → certificate showcase + zoom viewer
@@ -27,6 +28,54 @@
    --------------------------------------------------------------------- */
 const photos = (folder, count, ext = 'jpg') =>
   Array.from({ length: count }, (_, i) => `images/activities/${folder}/${i + 1}.${ext}`);
+
+
+/* =====================================================================
+   0. EDUCATION  ("What I studied")
+   ---------------------------------------------------------------------
+   One object, rendered as one card. Fields marked optional can be set to
+   '' (text) or [] (lists), or deleted, and that part simply disappears.
+
+   icon      emoji in the card header
+   school    institution name
+   degree    degree / major (put your exact title here, e.g. with "S.Kom.")
+   period    chip next to the degree, e.g. '2022 – 2026' or 'Graduated Oct 2026'
+   location  optional small line under the degree
+   gpa       optional. Shows a "GPA x.xx" chip when filled, e.g. '3.89'
+   summary   one-sentence intro (larger text)
+   details   array of paragraphs that explain your studies
+   courses   array of { name, note } — shown as small cards
+   thesis    optional highlight box: { label, title, text, tags }
+   tags      optional chips at the bottom
+
+   TODO: the study years and course notes are general descriptions.
+   Make them specific (topics, tools, projects you did in each course).
+   ===================================================================== */
+const EDUCATION = {
+  icon: '🎓',
+  school: 'Universitas Mikroskil',
+  degree: 'Bachelor’s Degree in Information Technology',
+  period: 'Graduated Oct 2026',
+  location: 'Medan, Indonesia',
+  gpa: '',
+  summary: 'I studied Information Technology with a focus on data science: the area where data, business questions and machine learning meet.',
+  details: [
+    'My coursework was built around turning raw data into decisions. I learned how to explore and visualize data, how to read it through a business lens, and how to train machine learning models that learn from it.',
+    'Alongside lectures, I put the theory to work. I joined the Data Science track of the Studi Independen (MSIB Batch 7) at Startup Campus, practicing Python, prediction models and Looker Studio dashboards, and I led a student organization through its first two periods.'
+  ],
+  courses: [
+    { name: 'Data Analysis & Visualization', note: 'Exploring datasets and turning them into clear dashboards and charts.' },
+    { name: 'Business Analytics',            note: 'Using data to answer business questions and support decisions.' },
+    { name: 'Machine Learning',              note: 'Training and evaluating models that learn patterns from data.' }
+  ],
+  thesis: {
+    label: 'Final project (thesis)',
+    title: 'Pothole detection with YOLOv8n and OpenStreetMap',
+    text: 'My thesis detects potholes with YOLOv8n, the nano variant of YOLOv8, and connects the detections to OpenStreetMap. I built and trained the detection model, while a teammate built the API and deployment layer.',
+    tags: ['YOLOv8', 'TensorFlow Lite', 'OpenStreetMap']
+  },
+  tags: ['Data science', 'Machine learning', 'Business analytics']
+};
 
 
 /* =====================================================================
@@ -182,8 +231,44 @@ const ACTIVITIES = [
       'Evaluated submissions as a judge'
     ],
     tags: ['Design', 'Judging', 'Event organizing'],
-    gallery: photos('calc-2025', 3)
-  }
+    // gallery: photos('calc-2025', 3)
+  },
+  {
+  icon: '🎬',
+  color: 'butter',
+  title: 'Universitas Mikroskil',
+  org: 'Content Marketing Talent · Social Media',
+  period: '',
+  summary: 'Served as a content marketing talent for Universitas Mikroskil, creating engaging short-form content to promote the university’s academic programs, campus life, and community activities across social media platforms.',
+  details: [
+    'Through this role, I contributed to strengthening Mikroskil’s digital presence and building a more interactive connection with prospective students and the wider audience.'
+  ],
+  highlights: [
+    'Appeared in social media marketing content, including tiktok videos and promotional videos',
+    'Promoted campus life, academic programs, and university events through engaging content'
+  ],
+  tags: ['Content Creation', 'Social Media Marketing', 'Digital Communication'],
+  gallery: photos('content-marketing', 4)
+},
+{
+  icon: '🎥',
+  color: 'sky',
+  title: 'Video Production Team',
+  org: 'Production Crew · Lecturer Community Service Program',
+  period: '',
+  summary: 'Contributed to the production of educational videos for a university lecturer community service program, handling recording setup, audiovisual equipment, and video post-production.',
+  details: [
+    'Responsible for preparing recording setups, operating camera equipment, arranging lighting and audio devices, and editing recorded footage into educational video materials.'
+  ],
+  highlights: [
+    'Prepared recording sets and managed camera, lighting, and audio equipment',
+    'Handled video recording and post-production editing',
+
+  ],
+  tags: ['Video Production', 'Videography', 'Video Editing', 'Technical Setup'],
+  // gallery: photos('video-production', 3)
+},
+  
 ];
 
 
@@ -201,51 +286,93 @@ const ACTIVITIES = [
    ===================================================================== */
 const PROJECTS = [
   {
-    img: 'images/projects/neuralsketch.svg', bg: '#ede5f8', tagBg: '#ede5f8', tagColor: '#8B5CF6',
-    tag: 'AI · Research',
-    title: 'NeuralSketch', tagline: 'Real-time Collaborative Whiteboard with AI',
-    year: '2025',
-    problem: {
-      headline: 'Whiteboarding is still a <em>solo experience</em> when you\'re remote.',
-      body: 'Most tools either sync badly or need you to manually draw everything. Describing a system in plain English and watching it appear — that didn\'t exist. Teams were copy-pasting screenshots into Figma and calling it collaboration.'
-    },
-    solution: {
-      headline: 'A canvas that <em>listens</em> to you and syncs in real time.',
-      body: 'I fine-tuned a vision-language model on 80k diagram screenshots to classify and auto-complete partial sketches. The sync layer runs on CRDTs (Yjs) over WebRTC — no central server, no conflicts, sub-50ms latency for 1000+ users simultaneously.'
-    },
-    highlights: [
-      'Fine-tuned ViT model on 80k diagram screenshots — completes sketches from text in ~1.2s',
-      'CRDT-based sync achieves sub-50ms latency with zero merge conflicts at 1000+ concurrent users',
-      'Deployed on Cloudflare Durable Objects — globally distributed, zero cold-start',
-      'Adopted by 3 MIT student orgs as their async planning tool during finals week'
-    ],
-    stack: ['Next.js', 'Rust/WASM', 'PyTorch', 'CRDTs (Yjs)', 'WebRTC', 'Redis', 'Cloudflare DO'],
-    outro: 'From a side project built in a weekend to a tool used by hundreds of people. NeuralSketch taught me that the best interfaces disappear — the user just thinks.',
-    github: '#', live: '#'
+  img: 'images/projects/yolov8.jpeg',
+  bg: '#e8f0f8',
+  tagBg: '#e8f0f8',
+  tagColor: '#2563EB',
+  tag: 'AI · Computer Vision',
+  title: 'Pothole Detection Using YOLOv8n',
+  tagline: 'Deep Learning-Based Road Damage Detection',
+  year: '2025',
+
+  problem: {
+    headline: 'Road potholes can become a <em>serious road safety hazard</em>.',
+    body: 'Identifying and monitoring potholes manually can be time-consuming, especially across large road areas. An automated detection approach is needed to identify road damage more efficiently and support road condition monitoring.'
   },
+
+  solution: {
+    headline: 'Using <em>YOLOv8n</em> to automatically detect road potholes.',
+    body: 'Developed and trained a YOLOv8n object detection model using a pothole image dataset. The training process was conducted using Python, PyTorch, and Ultralytics, followed by model validation and video-based prediction to evaluate its detection capabilities.'
+  },
+
+  highlights: [
+    'Worked with a dataset of 4,510 annotated images: 3,993 training, 352 validation, and 165 testing images',
+    'Trained YOLOv8n for 50 epochs with a batch size of 32 and image size of 864 pixels',
+    'Achieved 91.1% precision, 79.7% recall, 88.3% mAP@50, and 70.0% mAP@50-95',
+    'Evaluated model performance using confusion matrix, training results, and validation predictions',
+    'Implemented video-based pothole detection using configurable confidence and IoU thresholds'
+  ],
+
+  stack: [
+    'Python',
+    'PyTorch',
+    'YOLOv8n',
+    'Ultralytics',
+    'NumPy',
+    'Pandas',
+    'Google Colab'
+  ],
+
+  outro: 'This project strengthened my understanding of computer vision and deep learning, particularly in training, evaluating, and applying object detection models to real-world road safety challenges.',
+
+  github: 'https://github.com/nopimhra/yolov8n-pothole-detection-model',
+  // live: '#'
+},
   {
-    img: 'images/projects/litestore.svg', bg: '#d8f3ea', tagBg: '#d8f3ea', tagColor: '#0f9e7b',
-    tag: 'Systems',
-    title: 'LiteStore', tagline: 'LSM-tree Key-Value Storage Engine in Rust',
-    year: '2024',
-    problem: {
-      headline: 'I was using databases every day but had <em>no idea</em> how they actually worked.',
-      body: 'Every tutorial stopped at the surface. "Use RocksDB." "Use SQLite." No one walked through building a storage engine from scratch — the memtable, the SSTables, the compaction strategy. I wanted to understand, so I built it.'
-    },
-    solution: {
-      headline: 'A full LSM-tree storage engine, <em>zero external dependencies.</em>',
-      body: 'LiteStore implements all core components: an in-memory memtable (red-black tree), sorted SSTables on disk, bloom filters for fast negative lookups, a write-ahead log for crash recovery, and both size-tiered and leveled compaction — switchable at runtime.'
-    },
-    highlights: [
-      '380k write ops/sec and 520k read ops/sec on Apple M2 Pro in benchmarks',
-      'Bloom filters cut unnecessary disk reads by ~93% on negative key lookups',
-      'Both size-tiered and leveled compaction strategies — switchable at runtime via config',
-      'Blog post explaining the internals reached 8k readers and hit the front page of Hacker News'
-    ],
-    stack: ['Rust', 'LSM-tree', 'Red-Black Tree', 'Bloom Filters', 'WAL', 'SSTable', 'Benchmarking'],
-    outro: 'The most educational project I\'ve ever built. Now when I use RocksDB, I know exactly what\'s happening under the hood.',
-    github: '#'
+  img: 'images/projects/green-economy-oecd.jpg',
+  bg: '#e8f3ec',
+  tagBg: '#e8f3ec',
+  tagColor: '#25845B',
+  tag: 'Data Science · Machine Learning',
+  title: 'Green Economy: OECD Comparative Analysis',
+  tagline: 'A Data-Driven Approach to Understanding Green Economic Transitions',
+  year: '2024',
+
+  problem: {
+    headline: 'Green economic transitions reveal <em>different levels of progress</em> across OECD countries.',
+    body: 'OECD countries face varying challenges in transitioning toward sustainable economies. Differences in energy productivity, renewable energy adoption, carbon emissions, and environmental management make it difficult to measure progress and identify countries that need targeted policy interventions.'
   },
+
+  solution: {
+    headline: 'Using <em>data analytics and K-Means clustering</em> to uncover sustainability patterns.',
+    body: 'Conducted a comparative analysis of 38 OECD countries using economic, energy, and environmental indicators. The project involved data preparation, exploratory data analysis (EDA), and K-Means clustering to identify groups of countries with similar green economy characteristics and provide data-driven insights for sustainability strategies.'
+  },
+
+  highlights: [
+    'Analyzed 38 OECD countries using economic, energy productivity, renewable energy, and environmental indicators',
+    'Performed data preparation, including data subsetting, transformation, distribution analysis, and missing value handling',
+    'Conducted EDA to identify influential indicators, including Energy Productivity, Real GDP per Capita, and Renewable Electricity Generation',
+    'Applied the Elbow Method to determine the optimal number of clusters (K = 3)',
+    'Grouped OECD countries into three clusters based on their green economy characteristics',
+    'Developed cluster profiling and data-driven recommendations to support more targeted sustainability policies'
+  ],
+
+  stack: [
+    'Python',
+    'Pandas',
+    'NumPy',
+    'Scikit-learn',
+    'Matplotlib',
+    'Seaborn',
+    'K-Means Clustering',
+    'Exploratory Data Analysis'
+  ],
+
+  outro: 'This project strengthened my experience in data analytics and unsupervised machine learning, particularly in transforming complex socioeconomic and environmental indicators into meaningful patterns and actionable insights for sustainable development.',
+
+  github: 'https://github.com/nopimhra/OECD-Countries-Analisys/blob/main/OECD_countries_analysis.ipynb',
+  live: 'https://datastudio.google.com/u/0/reporting/13a61ffd-7b2b-4cef-8545-53291f72a981/page/lWSQE'
+},
   {
     img: 'images/projects/contextchat.svg', bg: '#fce4d8', tagBg: '#fce4d8', tagColor: '#f06540',
     tag: 'Full-Stack',
@@ -361,31 +488,88 @@ const PROJECT_LAYOUT = ['feat', 'side', 'side', 'feat', 'half', 'half'];
    ===================================================================== */
 const CERTIFICATES = [
   {
-    title: 'Data Science Independent Study',
-    issuer: 'Startup Campus · MSIB Batch 7',
-    date: '',
-    image: 'images/certificates/cert-1.svg',
-    link: ''
-  },
-  {
     title: 'Choir Competition — Second Place',
     issuer: 'Universitas Katolik Santo Thomas · Dies Natalis 2024',
     date: '2024',
-    image: 'images/certificates/cert-2.svg',
+    image: 'images/certificates/3.jpg',
     link: ''
   },
   {
-    title: 'Your certificate title',
-    issuer: 'Issuer name',
-    date: '',
-    image: 'images/certificates/cert-3.svg',
-    link: ''
+  title: 'Independent Study Certificate – MSIB Batch 7',
+  issuer: 'Kampus Merdeka · Yayasan Bakti Achmad Zaky',
+  date: 'November 24, 2024',
+  image: 'images/certificates/DS70418_Novia Cahaya Mahara_page-0001.jpg',
+  link: ''
+},
+{
+  title: 'Introduction to Artificial Intelligence',
+  issuer: 'IBM SkillsBuild',
+  date: 'December 13, 2025',
+  image: 'images/certificates/introduction AI_page-0001.jpg',
+  link: ''
+},
+{
+  title: 'Ready, Set Code! – SQL Programming',
+  issuer: 'Progate · BAKTI Kominfo',
+  date: 'November 12, 2020',
+  image: 'images/certificates/Novia Cahaya Mahara_page-0001.jpg',
+  link: ''
+},
+{
+  title: 'Belajar Dasar Visualisasi Data',
+  issuer: 'Dicoding Indonesia',
+  date: 'June 13, 2025',
+  image: 'images/certificates/sertifikat_course_177_778546_130625173147_page-0001.jpg',
+  link: ''
+},
+{
+  title: 'Data Science Track – MSIB Batch 7',
+  issuer: 'Startup Campus',
+  date: 'November 24, 2024',
+  image: 'images/certificates/Startup_Campus_c21301b1-d01b-4377-811c-17a7652c3362_page-0001.jpg',
+  link: ''
+},
+{
+  title: 'Figma UI UX Design Essentials',
+  issuer: 'Udemy',
+  date: 'September 10, 2024',
+  image: 'images/certificates/UC-4f35151a-9fbe-4da1-86e7-31dc021d70a9.jpg',
+  link: ''
+},
+  {
+    "title": "Mastering Photoshop CS6 and CS5 Made Easy Training Tutorial",
+    "issuer": "Udemy · TeachUcomp, Inc.",
+    "date": "2024-09-08",
+    "image": "images/certificates/UC-6bd903c0-2dd3-49c3-b0b5-06198d8022c2.jpg",
+    "link": ""
   },
   {
-    title: 'Your certificate title',
-    issuer: 'Issuer name',
-    date: '',
-    image: 'images/certificates/cert-4.svg',
-    link: ''
+    "title": "Learn CorelDRAW from Beginner to Advanced",
+    "issuer": "Udemy · Sajjad Zafar",
+    "date": "2024-08-25",
+    "image": "images/certificates/UC-8f4cd464-118e-4ccc-9838-46eb27eb15c5.jpg",
+    "link": ""
+  },
+  {
+    "title": "The Ultimate Microsoft Office 2021/365 Training Bundle",
+    "issuer": "Udemy · Simon Sez IT",
+    "date": "2024-09-10",
+    "image": "images/certificates/UC-3801f192-c83f-404a-b6c9-c857795eb1de.jpg",
+    "link": ""
+  },
+  {
+    "title": "Kelas Python Lengkap 2024: Pemula Sampai Mahir (+Projects)",
+    "issuer": "Udemy · Risdan Kristori",
+    "date": "2024-09-08",
+    "image": "images/certificates/UC-a4315ca9-d54d-4876-ae4b-22b3b7b016bf.jpg",
+    "link": ""
+  },
+  {
+    "title": "HTML5 + CSS3 + Bootstrap: The Beginner Web Design Course",
+    "issuer": "Udemy · Phil Ebiner, Nick Walter, Video School",
+    "date": "2024-09-07",
+    "image": "images/certificates/UC-b88fa490-8204-401a-99bd-6e2111bc253a.jpg",
+    "link": ""
   }
+
 ];
