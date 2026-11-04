@@ -64,7 +64,7 @@ const ACTIVITIES = [
       'Coordinated programs that strengthen student engagement'
     ],
     tags: ['Leadership', 'Organization building', 'SOP design'],
-    gallery: photos('itsmi',1)
+    gallery: photos('itsmi',3)
   },
   {
     icon: '🎨', color: 'lilac',
@@ -81,7 +81,7 @@ const ACTIVITIES = [
       'Oversaw preparation and event-day implementation'
     ],
     tags: ['Project management', 'Event planning'],
-    gallery: photos('web-design-competition', 2)
+    gallery: photos('web-design-competition', 3)
   },
   {
     icon: '🎤', color: 'rose',
@@ -149,7 +149,7 @@ const ACTIVITIES = [
       'Prepared and performed together as a team'
     ],
     tags: ['Teamwork', 'Performance'],
-    gallery: photos('choir-competition', 2)
+    gallery: photos('choir-competition', 3)
   },
   {
     icon: '🎶', color: 'butter',
