@@ -64,7 +64,7 @@ const ACTIVITIES = [
       'Coordinated programs that strengthen student engagement'
     ],
     tags: ['Leadership', 'Organization building', 'SOP design'],
-    gallery: photos('itsmi', 3)
+    gallery: photos('itsmi',1)
   },
   {
     icon: '🎨', color: 'lilac',
@@ -81,7 +81,7 @@ const ACTIVITIES = [
       'Oversaw preparation and event-day implementation'
     ],
     tags: ['Project management', 'Event planning'],
-    gallery: photos('web-design-competition', 3)
+    gallery: photos('web-design-competition', 2)
   },
   {
     icon: '🎤', color: 'rose',
@@ -98,7 +98,7 @@ const ACTIVITIES = [
       'Led the preparation and execution as project manager'
     ],
     tags: ['Project management', 'Business', 'Webinar'],
-    gallery: photos('business-webinar', 3)
+    // gallery: photos('business-webinar', 3)
   },
   {
     icon: '🧠', color: 'butter',
@@ -114,7 +114,7 @@ const ACTIVITIES = [
       'Explained fundamental AI concepts in plain language'
     ],
     tags: ['Deep learning', 'Mentoring'],
-    gallery: photos('deep-learning-workshop', 3)
+   // gallery: photos('deep-learning-workshop', 3)
   },
   {
     icon: '📊', color: 'mint',
@@ -149,7 +149,7 @@ const ACTIVITIES = [
       'Prepared and performed together as a team'
     ],
     tags: ['Teamwork', 'Performance'],
-    gallery: photos('choir-competition', 3)
+    gallery: photos('choir-competition', 2)
   },
   {
     icon: '🎶', color: 'butter',
