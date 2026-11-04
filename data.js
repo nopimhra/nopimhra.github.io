@@ -373,98 +373,99 @@ const PROJECTS = [
   github: 'https://github.com/nopimhra/OECD-Countries-Analisys/blob/main/OECD_countries_analysis.ipynb',
   live: 'https://datastudio.google.com/u/0/reporting/13a61ffd-7b2b-4cef-8545-53291f72a981/page/lWSQE'
 },
-  {
-    img: 'images/projects/contextchat.svg', bg: '#fce4d8', tagBg: '#fce4d8', tagColor: '#f06540',
-    tag: 'Full-Stack',
-    title: 'ContextChat', tagline: 'LLM-powered Semantic Documentation Search',
-    year: '2024',
-    problem: {
-      headline: 'Nobody reads the docs. They\'re <em>impossible to search.</em>',
-      body: 'Keyword search on large codebases or docs sites returns 200 results and none of them answer your question. "How do I retry a failed Stripe webhook?" — good luck Ctrl+F-ing that. The information exists. Finding it is the problem.'
-    },
-    solution: {
-      headline: 'Ask any question. Get an answer <em>with the exact source.</em>',
-      body: 'ContextChat indexes any GitHub repo or docs site into a pgvector store using a hybrid search pipeline — dense vector similarity + BM25, merged with Reciprocal Rank Fusion. Every answer cites the exact file and line it came from. Works with private repos via OAuth.'
-    },
-    highlights: [
-      'Ingestion pipeline processes a 10k-file repo in under 90 seconds with async chunking',
-      'Hybrid search (dense + BM25 + RRF) outperforms pure vector search by 23% on retrieval benchmarks',
-      '91% correct source attribution, verified against 200 hand-labeled Q&A pairs',
-      '3 MIT student orgs adopted it; 1.2k queries processed in the first month of launch'
-    ],
-    stack: ['LangChain', 'pgvector', 'FastAPI', 'React', 'OpenAI API', 'PostgreSQL', 'Docker'],
-    outro: 'ContextChat started as a personal frustration. It ended up saving my teammates hours every week during project crunch time.',
-    github: '#', live: '#'
+{
+  img: 'images/projects/mobile-price-classification-svm.jpg',
+  bg: '#e8eff8',
+  tagBg: '#e8eff8',
+  tagColor: '#2563EB',
+  tag: 'Machine Learning · Classification',
+  title: 'Mobile Price Classification Using SVM',
+  tagline: 'Predicting Smartphone Price Categories from Technical Specifications',
+  year: '2025',
+
+  problem: {
+    headline: 'Smartphone pricing depends on <em>multiple technical specifications</em>.',
+    body: 'Classifying smartphones into price categories can be challenging when considering various hardware specifications, such as RAM, battery capacity, camera features, and internal memory. This project explores how machine learning can identify patterns in these specifications to predict smartphone price ranges.'
   },
-  {
-    img: 'images/projects/flowviz.svg', bg: '#dceefb', tagBg: '#dceefb', tagColor: '#3b82f6',
-    tag: 'Data Viz',
-    title: 'FlowViz', tagline: 'Async Task Graph Visualizer for Distributed Systems',
-    year: '2024',
-    problem: {
-      headline: 'Distributed system bugs are <em>invisible</em> in log files.',
-      body: 'When a distributed pipeline fails, you get a wall of JSON logs from 12 services and a vague timeout error. Figuring out which span caused the cascade, and why, required hours of mentally reconstructing the call graph. There had to be a better way.'
-    },
-    solution: {
-      headline: 'Upload your traces. <em>See the graph.</em> Find the bug.',
-      body: 'FlowViz parses OpenTelemetry trace exports (OTLP JSON or Protobuf) and renders them as interactive DAGs using D3.js with virtualized rendering — so even 500MB trace files don\'t freeze the browser. Click any span to trace errors back to their root cause.'
-    },
-    highlights: [
-      'Handles OTLP trace files up to 500MB via virtualized D3 rendering — no UI freeze',
-      'Latency heatmap overlay highlights p95/p99 outlier spans instantly',
-      'One-click error propagation tracing: failed leaf span → root cause in milliseconds',
-      'Shipped as a VS Code extension — 400+ installs in the first two weeks after launch'
-    ],
-    stack: ['D3.js', 'OpenTelemetry', 'Go', 'React', 'WebAssembly', 'VS Code Extension API'],
-    outro: 'FlowViz came from a real debugging session that took 4 hours. With the tool, the same bug would have taken 10 minutes.',
-    github: '#'
+
+  solution: {
+    headline: 'Applying <em>Support Vector Machine (SVM)</em> to classify smartphone prices.',
+    body: 'Developed a multiclass classification model using the Mobile Price Classification dataset from Kaggle. Applied Min-Max Normalization to scale numerical features and evaluated Linear and RBF kernels to understand how kernel selection and hyperparameter tuning affect classification performance.'
   },
-  {
-    img: 'images/projects/palette.svg', bg: '#fdf3d0', tagBg: '#fdf3d0', tagColor: '#d4922a',
-    tag: 'Design Tool',
-    title: 'Palette', tagline: 'AI Color System Generator for Designers & Devs',
-    year: '2025',
-    problem: {
-      headline: 'Every design system starts with <em>the same painful hour</em> of color math.',
-      body: 'You pick a brand color. Then you need 10 shades of it. Then semantic tokens. Then neutral grays. Then you check WCAG contrast for every combination. It\'s mechanical work that eats up creative time, and most people just copy-paste a Tailwind palette and call it done.'
-    },
-    solution: {
-      headline: 'One seed color. A complete, <em>accessible</em> token system in seconds.',
-      body: 'Palette computes all scales in OKLCH — a perceptually uniform color space where equal numeric steps look equally different to the human eye. An LLM layer names the tokens, flags accessibility issues, and suggests semantic pairings. Export to CSS, Figma JSON, or Tailwind config in one click.'
-    },
-    highlights: [
-      'OKLCH-based scales feel perceptually uniform — no more "why does this shade look off?"',
-      'Automatic WCAG AA/AAA contrast checking across all token pairs before you export',
-      'Three export formats: CSS custom properties, Figma tokens JSON, Tailwind config',
-      'Featured in CSS-Tricks newsletter; 600+ palettes exported in the first month'
-    ],
-    stack: ['React', 'OKLCH', 'OpenAI API', 'CSS Custom Properties', 'Figma Plugin API', 'Tailwind'],
-    outro: 'Palette is the tool I wish I had two years ago. Now it saves every side project I start from that first hour of color dread.',
-    github: '#', live: '#'
+
+  highlights: [
+    'Performed data validation and confirmed there were no missing values or duplicate records',
+    'Applied Min-Max Normalization to ensure features were scaled consistently',
+    'Built and evaluated two SVM models using Linear and RBF kernels',
+    'Conducted hyperparameter tuning for C and gamma to explore model complexity',
+    'Achieved 96.75% accuracy using the Linear kernel',
+    'Achieved 90.75% accuracy using the RBF kernel, with Linear SVM delivering better classification performance'
+  ],
+
+  stack: [
+    'Python',
+    'Pandas',
+    'NumPy',
+    'Scikit-learn',
+    'Matplotlib',
+    'Seaborn',
+    'Support Vector Machine',
+    'Min-Max Normalization'
+  ],
+
+  outro: 'This project strengthened my understanding of supervised machine learning, particularly feature scaling, kernel selection, and hyperparameter tuning. It also demonstrated that simpler models can outperform more complex approaches when the data structure supports them.',
+
+  github: 'https://github.com/nopimhra/Mobile-Price-Classification',
+  // live: '#'
+},
+{
+  img: 'images/projects/repeat-purchase-prediction-ann.jpg',
+  bg: '#f0eafa',
+  tagBg: '#f0eafa',
+  tagColor: '#8B5CF6',
+  tag: 'AI · Deep Learning',
+  title: 'Repeat Purchase Prediction Using ANN',
+  tagline: 'Predicting E-commerce Customer Retention Through Behavioral Data',
+  year: '',
+
+  problem: {
+    headline: 'Understanding <em>who comes back to buy</em> is essential for e-commerce businesses.',
+    body: 'Identifying customers who are likely to make repeat purchases can help businesses understand customer retention and purchasing behavior. However, transactional data contains complex behavioral patterns, while imbalanced customer classes make repeat purchase prediction particularly challenging.'
   },
-  {
-    img: 'images/projects/promptly.svg', bg: '#f8dde8', tagBg: '#f8dde8', tagColor: '#e8527a',
-    tag: 'CLI Tool',
-    title: 'promptly', tagline: 'LLM Prompt Testing & Regression CLI',
-    year: '2024',
-    problem: {
-      headline: 'Changing a system prompt is a <em>silent breaking change.</em>',
-      body: 'When you tweak your LLM system prompt, you don\'t know what you broke until a user reports it. There was no diff, no regression test, no CI for prompts. Teams were manually spot-checking outputs in a spreadsheet. For a $5B industry, that\'s embarrassingly primitive.'
-    },
-    solution: {
-      headline: 'Treat your prompts like code. <em>Test them like code.</em>',
-      body: 'promptly lets you define a suite of test cases in a TOML file, run them against any LLM provider, and get a semantic diff of what changed between runs. Change your system prompt → instantly see which outputs regressed and by how much — in a beautiful TUI, in your terminal.'
-    },
-    highlights: [
-      '800+ GitHub stars; actively used by engineering teams at two YC-backed startups',
-      'Supports OpenAI, Anthropic, Mistral, and local Ollama in one unified config file',
-      'Semantic diff mode uses embedding cosine similarity — catches meaningful regressions, not just string diffs',
-      'Config-as-code: prompts, models, eval criteria, and thresholds all version-controlled in TOML'
-    ],
-    stack: ['Rust', 'Ratatui', 'OpenAI API', 'Anthropic API', 'Ollama', 'TOML', 'async-std', 'tokio'],
-    outro: 'promptly went from a personal script to an open-source tool with real users in 6 weeks. The best projects solve your own problems first.',
-    github: '#'
-  }
+
+  solution: {
+    headline: 'Using <em>Artificial Neural Networks</em> to predict repeat purchase behavior.',
+    body: 'Built a binary classification model using transactional and behavioral data from the BigQuery Public Dataset (thelook_ecommerce). Integrated multiple tables using SQL joins, engineered customer behavior features, and trained an ANN model to predict whether a customer would make another purchase.'
+  },
+
+  highlights: [
+    'Integrated data from four BigQuery tables: users, orders, order_items, and products using SQL joins',
+    'Engineered behavioral features, including total spending, item count, and unique brands and categories',
+    'Created transaction experience features such as delivery time, shipping duration, and return status',
+    'Extracted temporal features, including order hour and day',
+    'Built an ANN binary classification model using ReLU and Sigmoid activation functions, Binary Crossentropy, and Adam optimizer',
+    'Applied an 80/20 stratified train-test split and undersampling on training data to address class imbalance',
+    'Achieved approximately 92% accuracy, but struggled to identify minority-class repeat purchasers',
+    'Evaluated the limitations of accuracy as a performance metric in imbalanced classification problems'
+  ],
+
+  stack: [
+    'Python',
+    'Google BigQuery',
+    'SQL',
+    'Pandas',
+    'NumPy',
+    'Scikit-learn',
+    'TensorFlow',
+    'Keras',
+    'Artificial Neural Network'
+  ],
+
+  outro: 'This project strengthened my understanding of deep learning and customer behavior analytics. More importantly, it taught me to look beyond accuracy when evaluating classification models, especially when minority-class detection is critical to business objectives.',
+
+  github: 'https://github.com/nopimhra/Repeat-purchase-prediction-ANN-',
+  // live: '#'
+},
 ];
 
 /* Card sizes in the projects grid (12-column grid).
